@@ -1,0 +1,88 @@
+project_id = "ouhtzpqlxgaznpzivzou"
+
+[functions.evolution-whatsapp]
+verify_jwt = false
+
+[functions.agenda-api]
+verify_jwt = false
+
+[functions.send-marketing-campaign]
+verify_jwt = false
+
+[functions.elevenlabs-tts]
+verify_jwt = false
+
+[functions.n8n-get-shop-info]
+verify_jwt = false
+
+[functions.marketing-automations]
+verify_jwt = false
+
+[functions.invite-barber]
+verify_jwt = true
+
+[functions.link-barber-account]
+verify_jwt = false
+
+[functions.campaign-callback]
+verify_jwt = false
+
+[functions.update-campaign-status]
+verify_jwt = false
+
+[functions.cancel-campaign]
+verify_jwt = false
+
+[functions.check-campaign-status]
+verify_jwt = false
+
+[functions.appointment-reminders]
+verify_jwt = false
+
+[functions.process-opt-out]
+verify_jwt = false
+
+[functions.get-remaining-spots]
+verify_jwt = false
+
+[functions.blog-share]
+verify_jwt = false
+
+[functions.get-company-stats]
+verify_jwt = false
+
+[functions.support-chat]
+verify_jwt = false
+
+[functions.validate-barber-invite]
+verify_jwt = false
+
+[functions.get-company-owners]
+verify_jwt = false
+
+[functions.delete-company]
+verify_jwt = false
+
+[functions.create-checkout-session]
+verify_jwt = false
+
+[functions.stripe-webhook]
+verify_jwt = false
+
+[functions.check-subscription]
+verify_jwt = false
+
+[functions.customer-portal]
+verify_jwt = false
+
+[functions.delete-my-account]
+verify_jwt = false
+
+[functions.reset-deletion-password]
+verify_jwt = false
+
+[functions.contact-form]
+verify_jwt = false
+
+[functions.verify-recaptcha]
+verify_jwt = false

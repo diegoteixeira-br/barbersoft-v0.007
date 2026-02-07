@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Pulse subtle animation for CTA */
+@keyframes pulse-subtle {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(var(--gold) / 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(var(--gold) / 0.6);
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+/* BarberSoft SaaS Design System
+   Dark theme with gold (#D4AF37) and orange neon (#FF6B00) accents
+   All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Default to dark theme for this app */
+    --background: 0 0% 4%;
+    --foreground: 45 6% 95%;
+
+    --card: 0 0% 7%;
+    --card-foreground: 45 6% 95%;
+
+    --popover: 0 0% 7%;
+    --popover-foreground: 45 6% 95%;
+
+    /* Gold as primary */
+    --primary: 43 56% 52%;
+    --primary-foreground: 0 0% 4%;
+
+    /* Charcoal gray for secondary */
+    --secondary: 0 0% 11%;
+    --secondary-foreground: 45 6% 95%;
+
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 64%;
+
+    /* Orange neon as accent */
+    --accent: 25 100% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 14%;
+    --ring: 43 56% 52%;
+
+    --radius: 0.75rem;
+
+    /* Custom colors for the app */
+    --gold: 43 56% 52%;
+    --gold-light: 43 60% 65%;
+    --gold-dark: 43 56% 40%;
+    --orange-neon: 25 100% 50%;
+    --orange-neon-light: 25 100% 60%;
+    --charcoal: 0 0% 11%;
+    --charcoal-light: 0 0% 14%;
+    --charcoal-dark: 0 0% 7%;
+
+    /* Success/Warning/Info */
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 0%;
+    --info: 199 89% 48%;
+    --info-foreground: 0 0% 100%;
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 45 6% 95%;
+    --sidebar-primary: 43 56% 52%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 11%;
+    --sidebar-accent-foreground: 45 6% 95%;
+    --sidebar-border: 0 0% 14%;
+    --sidebar-ring: 43 56% 52%;
+  }
+
+  .dark {
+    --background: 0 0% 4%;
+    --foreground: 45 6% 95%;
+
+    --card: 0 0% 7%;
+    --card-foreground: 45 6% 95%;
+
+    --popover: 0 0% 7%;
+    --popover-foreground: 45 6% 95%;
+
+    --primary: 43 56% 52%;
+    --primary-foreground: 0 0% 4%;
+
+    --secondary: 0 0% 11%;
+    --secondary-foreground: 45 6% 95%;
+
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 64%;
+
+    --accent: 25 100% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 14%;
+    --ring: 43 56% 52%;
+
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 45 6% 95%;
+    --sidebar-primary: 43 56% 52%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 11%;
+    --sidebar-accent-foreground: 45 6% 95%;
+    --sidebar-border: 0 0% 14%;
+    --sidebar-ring: 43 56% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer utilities {
+  .gradient-gold {
+    background: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--gold-light)) 100%);
+  }
+
+  .gradient-orange {
+    background: linear-gradient(135deg, hsl(var(--orange-neon)) 0%, hsl(var(--orange-neon-light)) 100%);
+  }
+
+  .text-gold {
+    color: hsl(var(--gold));
+  }
+
+  .text-orange-neon {
+    color: hsl(var(--orange-neon));
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 20px hsl(var(--gold) / 0.3);
+  }
+
+  .glow-orange {
+    box-shadow: 0 0 20px hsl(var(--orange-neon) / 0.4);
+  }
+}
