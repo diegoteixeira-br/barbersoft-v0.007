@@ -310,7 +310,7 @@ export function QuickServiceModal({
                 />
 
                 {/* Payment Method - Only show when NOT scheduling for later */}
-                {!scheduleLater && (
+                {!scheduleLater && !isSplit && (
                   <FormField
                     control={form.control}
                     name="payment_method"
@@ -324,16 +324,97 @@ export function QuickServiceModal({
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="cash">💵 Dinheiro</SelectItem>
-                            <SelectItem value="pix">📱 PIX</SelectItem>
-                            <SelectItem value="debit_card">💳 Débito</SelectItem>
-                            <SelectItem value="credit_card">💳 Crédito</SelectItem>
+                            {PAYMENT_METHODS.map(m => (
+                              <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
+                )}
+
+                {/* Split Payment UI */}
+                {!scheduleLater && isSplit && (
+                  <div className="space-y-3">
+                    <FormLabel>Pagamento Dividido</FormLabel>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Select value={splitMethod1} onValueChange={setSplitMethod1}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          {PAYMENT_METHODS.filter(m => m.value !== splitMethod2).map(m => (
+                            <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <Input
+                        type="number"
+                        step="0.01"
+                        value={splitAmount1 || ""}
+                        placeholder="R$ 0,00"
+                        onChange={(e) => {
+                          const val = parseFloat(e.target.value) || 0;
+                          setSplitAmount1(val);
+                          setSplitAmount2(Math.max(0, +(totalPrice - val).toFixed(2)));
+                        }}
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Select value={splitMethod2} onValueChange={setSplitMethod2}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          {PAYMENT_METHODS.filter(m => m.value !== splitMethod1).map(m => (
+                            <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <Input
+                        type="number"
+                        step="0.01"
+                        value={splitAmount2 || ""}
+                        placeholder="R$ 0,00"
+                        onChange={(e) => {
+                          const val = parseFloat(e.target.value) || 0;
+                          setSplitAmount2(val);
+                          setSplitAmount1(Math.max(0, +(totalPrice - val).toFixed(2)));
+                        }}
+                      />
+                    </div>
+                    {isSplit && splitAmount1 > 0 && splitAmount2 > 0 && Math.abs(splitAmount1 + splitAmount2 - totalPrice) >= 0.01 && (
+                      <p className="text-xs text-destructive">
+                        A soma (R$ {(splitAmount1 + splitAmount2).toFixed(2)}) deve ser igual ao total (R$ {totalPrice.toFixed(2)})
+                      </p>
+                    )}
+                    {splitMethod1 === splitMethod2 && (
+                      <p className="text-xs text-destructive">Os métodos devem ser diferentes</p>
+                    )}
+                  </div>
+                )}
+
+                {/* Toggle dividir pagamento */}
+                {!scheduleLater && totalPrice > 0 && (
+                  <div className="flex items-center justify-between rounded-lg border p-3">
+                    <div className="flex items-center gap-2">
+                      <Split className="h-4 w-4 text-muted-foreground" />
+                      <Label htmlFor="split-payment" className="text-sm">Dividir Pagamento</Label>
+                    </div>
+                    <Switch
+                      id="split-payment"
+                      checked={isSplit}
+                      onCheckedChange={(checked) => {
+                        setIsSplit(checked);
+                        if (checked) {
+                          const half = +(totalPrice / 2).toFixed(2);
+                          setSplitAmount1(half);
+                          setSplitAmount2(+(totalPrice - half).toFixed(2));
+                          form.setValue("payment_method", "split");
+                        } else {
+                          form.setValue("payment_method", "");
+                        }
+                      }}
+                    />
+                  </div>
                 )}
 
                 {/* Toggle para agendar */}
