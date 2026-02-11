@@ -77,9 +77,10 @@ serve(async (req) => {
     const { data: settings, error: settingsError } = await supabaseClient
       .from("saas_settings")
       .select("*")
-      .single();
+      .maybeSingle();
 
     if (settingsError) throw new Error(`Settings error: ${settingsError.message}`);
+    if (!settings) throw new Error("Nenhuma configuração SaaS encontrada. Crie uma configuração primeiro em Configurações > SaaS.");
     logStep("Settings loaded", settings);
 
     // Buscar features do banco
