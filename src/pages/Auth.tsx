@@ -13,9 +13,12 @@ import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 
 const PLANS = [
-  { value: "inicial", label: "Inicial", price: "R$ 99/mês" },
-  { value: "profissional", label: "Profissional", price: "R$ 199/mês" },
-  { value: "franquias", label: "Franquias", price: "R$ 499/mês" },
+  { value: "inicial", billing: "monthly", label: "Inicial Mensal", price: "R$ 99/mês" },
+  { value: "inicial", billing: "annual", label: "Inicial Anual", price: "R$ 79/mês", note: "cobrado anualmente" },
+  { value: "profissional", billing: "monthly", label: "Profissional Mensal", price: "R$ 199/mês" },
+  { value: "profissional", billing: "annual", label: "Profissional Anual", price: "R$ 159/mês", note: "cobrado anualmente" },
+  { value: "franquias", billing: "monthly", label: "Franquias Mensal", price: "R$ 499/mês" },
+  { value: "franquias", billing: "annual", label: "Franquias Anual", price: "R$ 399/mês", note: "cobrado anualmente" },
 ];
 
 type AuthView = "auth" | "forgot-password";
@@ -52,6 +55,15 @@ export default function Auth() {
   const [signupConfirmPassword, setSignupConfirmPassword] = useState("");
   const [selectedPlan, setSelectedPlan] = useState(planFromUrl || "profissional");
   const [selectedBilling, setSelectedBilling] = useState(billingFromUrl || "monthly");
+  const selectedComposite = `${selectedPlan}-${selectedBilling}`;
+
+  const handlePlanChange = (compositeValue: string) => {
+    const lastDash = compositeValue.lastIndexOf("-");
+    const plan = compositeValue.substring(0, lastDash);
+    const billing = compositeValue.substring(lastDash + 1);
+    setSelectedPlan(plan);
+    setSelectedBilling(billing);
+  };
 
   useEffect(() => {
     if (planFromUrl) {
@@ -540,16 +552,19 @@ export default function Auth() {
 
                   <div className="space-y-2">
                     <Label htmlFor="signup-plan">Plano</Label>
-                    <Select value={selectedPlan} onValueChange={setSelectedPlan}>
+                    <Select value={selectedComposite} onValueChange={handlePlanChange}>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Selecione o plano" />
                       </SelectTrigger>
                       <SelectContent>
                         {PLANS.map((plan) => (
-                          <SelectItem key={plan.value} value={plan.value}>
-                            <span className="flex items-center justify-between gap-4 w-full">
+                          <SelectItem key={`${plan.value}-${plan.billing}`} value={`${plan.value}-${plan.billing}`}>
+                            <span className="flex items-center gap-2 w-full">
                               <span className="font-medium">{plan.label}</span>
-                              <span className="text-muted-foreground text-sm">{plan.price}</span>
+                              <span className="text-muted-foreground text-sm">
+                                {plan.price}
+                                {plan.note && ` (${plan.note})`}
+                              </span>
                             </span>
                           </SelectItem>
                         ))}
