@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.suggest-blog-title]
 verify_jwt = false
+
+[functions.reset-deletion-password]
+verify_jwt = false
