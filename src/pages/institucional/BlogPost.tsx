@@ -80,7 +80,7 @@ const BlogPost = () => {
     .filter(p => p.category === post.category && String(p.id) !== String(post.id))
     .slice(0, 2);
 
-  const shareUrl = `https://barbersoft.com.br/blog/${post.slug}`;
+  const shareUrl = `https://barbersoft.com.br/share/blog/${post.slug}`;
   const encodedShareUrl = encodeURIComponent(shareUrl);
   const shareText = encodeURIComponent(post.title);
 
