@@ -212,30 +212,11 @@ export default function Auth() {
           }
         }
 
-        toast({ title: "Conta criada!", description: "Redirecionando para o checkout..." });
+        toast({ title: "Conta criada!", description: "Verifique seu email para confirmar sua conta." });
 
-        try {
-          const { data: checkoutData, error: checkoutError } = await supabase.functions.invoke(
-            "create-checkout-session",
-            { body: { plan: selectedPlan, billing: selectedBilling, businessName: signupName } }
-          );
-
-          if (checkoutError) {
-            console.error("Checkout error:", checkoutError);
-            toast({ title: "Erro no checkout", description: "Não foi possível iniciar o checkout. Redirecionando para escolha de plano.", variant: "destructive" });
-            navigate("/escolher-plano");
-            return;
-          }
-
-          if (checkoutData?.url) {
-            window.location.href = checkoutData.url;
-            return;
-          }
-        } catch (checkoutErr) {
-          console.error("Checkout exception:", checkoutErr);
-          navigate("/escolher-plano");
-          return;
-        }
+        // Redirect to email confirmation page
+        navigate(`/email-confirmacao?email=${encodeURIComponent(signupEmail)}`);
+        return;
       }
     } finally {
       setIsLoading(false);

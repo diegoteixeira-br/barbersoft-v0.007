@@ -749,6 +749,59 @@ export default function Assinatura() {
           )}
         </div>
 
+        {/* How it Works Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <AlertCircle className="h-5 w-5 text-primary" />
+              Como funciona?
+            </CardTitle>
+            <CardDescription>Guia rápido sobre sua assinatura</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div className="rounded-lg bg-muted/50 p-4 space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/20 text-primary text-sm font-bold">1</div>
+                  <h4 className="font-semibold text-sm text-foreground">Contratar</h4>
+                </div>
+                <ul className="text-xs text-muted-foreground space-y-1 ml-10">
+                  <li>• Escolha seu plano acima</li>
+                  <li>• Clique em "Escolher Plano"</li>
+                  <li>• Preencha os dados de pagamento no Stripe</li>
+                  <li>• Pronto! Acesso liberado na hora</li>
+                </ul>
+              </div>
+
+              <div className="rounded-lg bg-muted/50 p-4 space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/20 text-primary text-sm font-bold">2</div>
+                  <h4 className="font-semibold text-sm text-foreground">Trocar de Plano</h4>
+                </div>
+                <ul className="text-xs text-muted-foreground space-y-1 ml-10">
+                  <li>• Clique em "Gerenciar Método de Pagamento"</li>
+                  <li>• No portal Stripe, clique em "Atualizar plano"</li>
+                  <li>• Escolha o novo plano desejado</li>
+                  <li>• O valor será ajustado proporcionalmente</li>
+                </ul>
+              </div>
+
+              <div className="rounded-lg bg-muted/50 p-4 space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-destructive/20 text-destructive text-sm font-bold">3</div>
+                  <h4 className="font-semibold text-sm text-foreground">Cancelar</h4>
+                </div>
+                <ul className="text-xs text-muted-foreground space-y-1 ml-10">
+                  <li>• Clique em "Cancelar Assinatura" abaixo</li>
+                  <li>• Confirme no portal Stripe</li>
+                  <li>• Acesso mantido até o fim do período</li>
+                  <li>• Pode reativar a qualquer momento</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Money-back Guarantee */}
         <Card className="border-gold/20 bg-gradient-to-r from-gold/5 to-transparent">
           <CardContent className="pt-6">

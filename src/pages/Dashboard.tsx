@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DollarSign, Calendar, TrendingUp, Users } from "lucide-react";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { useDashboardData, calculatePercentageChange, formatCurrency } from "@/hooks/useDashboardData";
@@ -8,6 +8,9 @@ import { ServicesPieChart } from "@/components/dashboard/ServicesPieChart";
 import { TopBarberCard } from "@/components/dashboard/TopBarberCard";
 import { UpcomingAppointmentsList } from "@/components/dashboard/UpcomingAppointmentsList";
 import { FinancialOverviewChart } from "@/components/dashboard/FinancialOverviewChart";
+import { OnboardingCard } from "@/components/dashboard/OnboardingCard";
+import { useSubscription } from "@/hooks/useSubscription";
+import { supabase } from "@/integrations/supabase/client";
 import { format, startOfMonth, endOfMonth } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -16,6 +19,14 @@ export default function Dashboard() {
     start: startOfMonth(new Date()),
     end: endOfMonth(new Date()),
   });
+  const [isEmailConfirmed, setIsEmailConfirmed] = useState(true);
+  const { status } = useSubscription();
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      setIsEmailConfirmed(!!data.user?.email_confirmed_at);
+    });
+  }, []);
 
   const { 
     metrics, 
@@ -45,6 +56,10 @@ export default function Dashboard() {
           <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
           <p className="mt-1 text-muted-foreground capitalize">{todayDate}</p>
         </div>
+        {/* Onboarding Card for trial users */}
+        {(status?.plan_status === "trial" || !status?.plan_status) && (
+          <OnboardingCard isEmailConfirmed={isEmailConfirmed} planStatus={status?.plan_status || null} />
+        )}
 
         {/* Metrics Grid */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
